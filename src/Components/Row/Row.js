@@ -42,15 +42,15 @@ const Row = ({title , fetchUrl, isLargeRow}) => {
         }
     };
 
-    const hadleClick = (movie) => {
+    const handleClick = (movie) => {
         if(trailerUrl){
             setTrailerUrl('');
         }else{
             movieTrailer(movie?.name || "")
             .then(url => {
-                const urlParms = new URLSearchParams(URL(url).search);
-                setTrailerUrl(urlParms.get('v'))
-            }).catch(err => console.log(err))
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerUrl(urlParams.get('v'))
+            }).catch(err => alert('Sorry to say that maximum data are not fetched Click the "MONEY HEIST" see the fun '))
         }
     }
 
@@ -60,11 +60,11 @@ const Row = ({title , fetchUrl, isLargeRow}) => {
             <div className="row__posters">
                 {
                     movies.map((movie) => (
-                        <img onClick={() => hadleClick(movie)} className={`row__poster ${isLargeRow && "row_posterLarge"}`} key={movie.id} src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name}/>
+                        <img onClick={() => handleClick(movie)} className={`row__poster ${isLargeRow && "row_posterLarge"}`} key={movie.id} src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name}/>
                     ))
                 }
             </div>
-            {trailerUrl && <YouTube vedioId={trailerUrl} opts={opts} />}
+            {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
         </div>
     );
 }
